@@ -1,0 +1,180 @@
+%-------------------------
+% Resume in Latex
+% Author : Jake Gutierrez
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+% \input{glyphtounicode} % Commented out for XeTeX compatibility (Tectonic)
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+% \pdfgentounicode=1 % Commented out for XeTeX compatibility (Tectonic)
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+    \textbf{\Huge \scshape Arnav Rinawa} \\ \vspace{1pt}
+    \small +91 9166270181 $|$
+    \href{mailto:23dec504@lnmiit.ac.in}{\underline{23dec504@lnmiit.ac.in}} $|$
+    \href{https://www.linkedin.com/in/arnav-rinawa}{\underline{Linkedin}} $|$
+    \href{https://github.com/ARSOULGOD}{\underline{Github}} $|$
+    \href{https://leetcode.com/u/arnav_rinawa}{\underline{Leetcode}} $|$
+    \href{https://arsoulgod-github-io-git-main-arsoulgods-projects.vercel.app/}{\underline{Portfolio}}
+\end{center}
+
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {The LNM Institute of Information Technology}{Jaipur, India}
+      {B.Tech--M.Tech, Electronics and Communication Engineering $|$ CGPA: 7.14}{2023 -- 2028}
+    \resumeSubheading
+      {MPS International School}{Jaipur, India}
+      {Class XII, CBSE --- 87.8\% $|$ Class X, CBSE --- 94\%}{2021 -- 2023}
+  \resumeSubHeadingListEnd
+
+
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Software Developer Intern}{March 2026 -- Present}
+      {Solace}{(Remote)}
+      \resumeItemListStart
+        \resumeItem{Tested a File Micro-Integration service handling file transfers across Local, SFTP, FTPS, and cloud storage systems, extending validation coverage to a newly built AWS S3 file transfer feature integrated with Solace's Pub-Sub broker.}
+        \resumeItem{Built an AI agent that turns plain English into Jira actions using Groq's LLM — used by 15+ people at the org.}
+        \resumeItem{Added automatic PDF sprint reports from Jira data, cutting reporting time from hours to seconds.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Teaching Assistant --- Basic Electronics Lab}{Aug. 2024 -- Dec. 2024}
+      {The LNM Institute of Information Technology}{Jaipur, India}
+      \resumeItemListStart
+                \resumeItem{Guided 50+ students in analog/digital circuits and measurement techniques; awarded \textit{Certificate of Appreciation} by the Dean of Academics for strengthening lab-course alignment with faculty.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \resumeSubHeadingListStart
+          \resumeProjectHeading
+    {\textbf{AI-Powered Jira Agent} $|$ \emph{React, Node.js, Express, Groq LLM, REST APIs, PDFKit}}{\href{https://github.com/ARSOULGOD/JIRA-PROJECT.git}{\underline{GitHub}}}
+    \resumeItemListStart
+      \resumeItem{Built an AI agent that converts plain-English commands into Jira actions using Groq's Llama-3.3-70b with zero-shot JSON parsing, replacing manual ticket creation for 15+ active users.}
+      \resumeItem{Designed a full-stack pipeline (React + Node.js/Express) with multi-turn context retention for real-time Jira REST API orchestration, sustaining 100\% uptime through the entire beta.}
+      \resumeItem{Automated sprint reporting with a PDFKit-based analytics feature, cutting report generation time from hours to seconds.}
+   
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{EEG Motor Imagery Classifier for BCIs} $|$ \emph{Python, MNE, Scikit-learn}}{\href{https://github.com/ARSOULGOD/EEG-Motor-Imagery-Classification.git}{\underline{GitHub}}}
+          \resumeItemListStart
+             \resumeItem{Preprocessed raw EEG data from 109 subjects (PhysioNet dataset) using ICA-based artifact removal and CSP spatial filtering, preparing clean signals for classification, under the guidance of Prof. Bharat Verma.}
+      \resumeItem{Evaluated and documented model performance (CSP+SVM vs. EEGNet CNN) under subject-independent validation, achieving 92\%+ classification accuracy on left/right hand motor imagery — in a 2-person team project with Akshat Tyagi.}
+    \resumeItemListEnd
+          \resumeItemListEnd
+    \resumeSubHeadingListEnd
+
+%
+%-----------PROGRAMMING SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: C, C++, JavaScript, SQL, HTML, CSS} \\
+     \textbf{Frameworks}{: ReactJS, Node.js, Express.js, Next.js} \\
+     \textbf{Developer Tools}{: Git, GitHub, AWS (S3), Figma, Vercel, Render, Jira} \\
+     \textbf{Concepts}{: Data Structures \& Algorithms, OOP, RDBMS, REST APIs, Operating Systems, Computer Network}
+    }}
+ \end{itemize}
+
+%-----------ACHIEVEMENTS-----------
+\section{Achievements}
+  \resumeSubHeadingListStart
+     \item\small{\textbf{LeetCode Rating 1691, Top 14\%} --- Solved 200+ problems; ranked 791 in Weekly Contest 506 and 873 in Biweekly Contest 184.}
+    \vspace{-2pt}
+    \item\small{\textbf{Selected for Round 2, Polaris Fellowship} --- Chosen among top applicants in a national fellowship program that places students with engineering teams at leading Indian companies.}
+    \vspace{-2pt}
+    \item\small{\textbf{Fest Head, Desportivos} --- Led 100+ member organizing committee managing INR 50L+ budget and 1,500+ participants from 75+ colleges; secured headline artist Sachin-Jigar.}
+  \resumeSubHeadingListEnd
+
+%-------------------------------------------
+\end{document}

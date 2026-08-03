@@ -59,8 +59,9 @@ const RoadMapDay = ({ day }) => (
 // ── Main Component ────────────────────────────────────────────────────────────
 const Interview = () => {
     const [ activeNav, setActiveNav ] = useState('technical')
-    const { report, getReportById, loading, getResumePdf } = useInterview()
+    const { report, getReportById, loading, getResumePdf, error } = useInterview()
     const { interviewId } = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (interviewId) {
@@ -69,11 +70,26 @@ const Interview = () => {
     }, [ interviewId ])
 
 
-
-    if (loading || !report) {
+    // `!report && !error` covers the first render, before the fetch effect has run
+    if (loading || (!report && !error)) {
         return (
             <main className='loading-screen'>
                 <h1>Loading your interview plan...</h1>
+            </main>
+        )
+    }
+
+    // full-page only when there is no report to fall back on; a failed pdf download
+    // sets `error` while the report is still on screen, and that must stay inline
+    if (!report) {
+        return (
+            <main className='error-screen' role='alert'>
+                <h1>We couldn&apos;t load this <span className='highlight'>interview plan</span></h1>
+                <p>{error}</p>
+                <div className='error-screen__actions'>
+                    <button className='button primary-button' onClick={() => getReportById(interviewId)}>Try Again</button>
+                    <button className='button' onClick={() => navigate('/')}>Back to My Plans</button>
+                </div>
             </main>
         )
     }
@@ -85,6 +101,17 @@ const Interview = () => {
 
     return (
         <div className='interview-page'>
+
+            {/* Non-fatal failure (e.g. the resume download) — the plan below stays usable */}
+            {error && (
+                <div className='error-banner' role='alert'>
+                    <span className='error-banner__icon'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" stroke="#161616" strokeWidth="2" /><line x1="12" y1="16" x2="12.01" y2="16" stroke="#161616" strokeWidth="2" /></svg>
+                    </span>
+                    <p>{error}</p>
+                </div>
+            )}
+
             <div className='interview-layout'>
 
                 {/* ── Left Nav ── */}

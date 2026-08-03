@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router'
 
 const Home = () => {
 
-    const { loading, generateReport, reports } = useInterview()
+    const { loading, generateReport, reports, error } = useInterview()
     const [jobDescription, setJobDescription] = useState("")
     const [selfDescription, setSelfDescription] = useState("")
     const [resumeFile, setResumeFile] = useState(null)
@@ -16,6 +16,8 @@ const Home = () => {
     const handleGenerateReport = async () => {
         const resumeFile = resumeInputRef.current.files[0]
         const data = await generateReport({ jobDescription, selfDescription, resumeFile })
+        // on failure the hook has already put a message on `error`; the form stays put so the user can retry
+        if (!data?._id) return
         navigate(`/interview/${data._id}`)
     }
 
@@ -35,6 +37,16 @@ const Home = () => {
                 <h1>Create Your Custom <span className='highlight'>Interview Plan</span></h1>
                 <p>Let our AI analyze the job requirements and your unique profile to build a winning strategy.</p>
             </header>
+
+            {/* Failure Banner */}
+            {error && (
+                <div className='error-banner' role='alert'>
+                    <span className='error-banner__icon'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" stroke="#161616" strokeWidth="2" /><line x1="12" y1="16" x2="12.01" y2="16" stroke="#161616" strokeWidth="2" /></svg>
+                    </span>
+                    <p>{error}</p>
+                </div>
+            )}
 
             {/* Main Card */}
             <div className='interview-card'>

@@ -4,7 +4,9 @@
       "Bash(npx eslint *)",
       "Bash(node -e \"require\\('./src/controllers/interview.controller.js'\\); console.log\\('controller loads OK'\\)\")",
       "Bash(node -e \"require\\('./src/controllers/interview.controller.js'\\)\")",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(npm test *)"
     ]
   },
   "enabledMcpjsonServers": [

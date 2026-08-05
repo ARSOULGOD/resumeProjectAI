@@ -17,7 +17,14 @@ cd Frontend && npm run lint      # eslint (flat config, ignores dist/)
 cd Frontend && npm run preview   # serve the built bundle
 ```
 
-No test framework is set up anywhere. `Backend`'s `npm test` is the placeholder that exits 1; `Frontend` has no test script at all. Do not claim test coverage — verify changes with `npm run lint` and `npm run build`, and say plainly when something is unverified at runtime.
+`Backend` runs vitest; `Frontend` has no test script at all, so frontend changes are still verified only with `npm run lint` and `npm run build`. Do not claim frontend test coverage, and say plainly when something is unverified at runtime.
+
+```bash
+cd Backend && npm test          # vitest run
+cd Backend && npm run test:watch
+```
+
+Backend tests sit beside the code they cover (`src/**/*.test.js`, config in `vitest.config.mjs`) with fixtures in `src/__fixtures__/`. Two things make them unusual: they are ESM files exercising CommonJS modules, so `vi.mock` does not intercept `require` — external boundaries are substituted by assigning onto the service's `module.exports` *before* the subject module is required. And `vitest.config.mjs` injects a dummy `AI_API_KEY`, because `ai.service.js` builds its client at module load and would otherwise throw on import even when mocked. Only the genuinely external calls (Gemini, Mongo persistence) are faked; multer, `pdf-parse`, and mongoose schema validation all run for real.
 
 ### Environment
 
@@ -69,7 +76,6 @@ Because axios is configured with `responseType: "blob"` for the PDF download, er
 
 Verify against the code before assuming any of these is still true.
 
-- **`generateInterViewReportController` requires a resume file.** It dereferences `req.file.buffer` unconditionally, so submitting without a PDF throws — but `Home.jsx` tells the user "Either a **Resume** or a **Self Description** is required." Either the controller needs to branch on `req.file` or the UI copy is wrong.
 - **Upload limits are misadvertised.** `Home.jsx` says "PDF or DOCX (Max 5MB)"; multer caps at 3 MB and `pdf-parse` cannot read DOCX.
 - **No Express error handler.** Controllers are `async` with no try/catch. Express 5 does forward rejected promises to its default handler, so failures return a 500 with an HTML body rather than `{ message }` — the frontend's message extraction therefore falls back to its generic strings on any thrown backend error.
 - **Cookie flags are unset.** `res.cookie("token", token)` sets no `httpOnly`, `sameSite`, or `secure`, so the JWT is readable from JS and will not survive a cross-site deployment.

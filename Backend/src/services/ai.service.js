@@ -63,19 +63,31 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
 
 
 async function generatePdfFromLatex(latexContent) {
+    const os = require('os');
+    const tmpDir = os.tmpdir();
     const tempFileName = `resume_${Date.now()}_${Math.random().toString(36).substring(7)}`;
-    const tempTexPath = path.join(__dirname, `../../${tempFileName}.tex`);
-    const tempPdfPath = path.join(__dirname, `../../${tempFileName}.pdf`);
-    
+    const tempTexPath = path.join(tmpDir, `${tempFileName}.tex`);
+    const tempPdfPath = path.join(tmpDir, `${tempFileName}.pdf`);
+
     fs.writeFileSync(tempTexPath, latexContent);
-    
+
+    const rootDir = path.join(__dirname, '../../');
+    const tectonicPath = path.join(rootDir, 'tectonic');
+
     try {
-        await execPromise(`./tectonic ${tempFileName}.tex`, { cwd: path.join(__dirname, '../../') });
+        // Ensure tectonic binary has executable permissions (important for deployed environments)
+        await execPromise(`chmod +x ${tectonicPath}`);
+
+        // Vercel/Serverless environments have read-only filesystems. 
+        // We must point XDG_CACHE_HOME to /tmp so Tectonic can cache packages.
+        const env = { ...process.env, XDG_CACHE_HOME: path.join(tmpDir, 'tectonic_cache') };
+
+        await execPromise(`${tectonicPath} ${tempTexPath}`, { cwd: tmpDir, env });
         const pdfBuffer = fs.readFileSync(tempPdfPath);
-        
+
         if (fs.existsSync(tempTexPath)) fs.unlinkSync(tempTexPath);
         if (fs.existsSync(tempPdfPath)) fs.unlinkSync(tempPdfPath);
-        
+
         return pdfBuffer;
     } catch (error) {
         if (fs.existsSync(tempTexPath)) fs.unlinkSync(tempTexPath);

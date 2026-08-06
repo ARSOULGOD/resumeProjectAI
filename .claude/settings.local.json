@@ -6,7 +6,13 @@
       "Bash(node -e \"require\\('./src/controllers/interview.controller.js'\\)\")",
       "Bash(npm run *)",
       "Bash(npm install *)",
-      "Bash(npm test *)"
+      "Bash(npm test *)",
+      "Bash(gh auth *)",
+      "Read(//usr/bin/**)",
+      "Bash(command -v snap apt dnf)",
+      "Read(//usr/lib/**)",
+      "Bash(command -v gh)",
+      "Read(//home/arnav-rinawa/**)"
     ]
   },
   "enabledMcpjsonServers": [

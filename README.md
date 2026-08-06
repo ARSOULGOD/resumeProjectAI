@@ -46,22 +46,3 @@ The application operates via two primary pipelines:
 5. **Delivery:** The highly-targeted, professional PDF is streamed directly back to the user for download, bypassing the need to ever store sensitive resume files permanently on the server.
 
 ---
-
-## 🚀 Getting Started
-
-The project is split into two independent repositories. You will need two terminal windows.
-
-**Backend Setup**
-```bash
-cd Backend
-npm install
-# Ensure .env is configured with MONGO_URI, JWT_SECRET, and AI_API_KEY
-npm run dev # Runs on http://localhost:3000
-```
-
-**Frontend Setup**
-```bash
-cd Frontend
-npm install
-npm run dev # Runs on http://localhost:5173
-```

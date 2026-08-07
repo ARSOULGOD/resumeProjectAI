@@ -9,40 +9,46 @@ const interviewReportModel = require("../models/interviewReport.model")
  * @description Controller to generate interview report based on user self description, resume and job description.
  */
 async function generateInterViewReportController(req, res) {
+    try {
+        const { selfDescription, jobDescription } = req.body
 
-    const { selfDescription, jobDescription } = req.body
+        // the UI offers the resume and the self description as alternatives, so
+        // either one on its own is enough to build a profile from
+        if (!req.file && !selfDescription?.trim()) {
+            return res.status(400).json({
+                message: "Either a resume or a self description is required."
+            })
+        }
 
-    // the UI offers the resume and the self description as alternatives, so
-    // either one on its own is enough to build a profile from
-    if (!req.file && !selfDescription?.trim()) {
-        return res.status(400).json({
-            message: "Either a resume or a self description is required."
+        const resume = req.file
+            ? (await (new pdfParse.PDFParse(Uint8Array.from(req.file.buffer))).getText()).text
+            : undefined
+
+        const interViewReportByAi = await generateInterviewReport({
+            resume,
+            selfDescription,
+            jobDescription
         })
+
+        const interviewReport = await interviewReportModel.create({
+            user: req.user.id,
+            resume,
+            selfDescription,
+            jobDescription,
+            ...interViewReportByAi
+        })
+
+        res.status(201).json({
+            message: "Interview report generated successfully.",
+            interviewReport
+        })
+    } catch (error) {
+        console.error("Error generating interview report:", error);
+        res.status(500).json({
+            message: "Failed to generate interview report. Please check server logs.",
+            error: error.message || "Unknown error occurred"
+        });
     }
-
-    const resume = req.file
-        ? (await (new pdfParse.PDFParse(Uint8Array.from(req.file.buffer))).getText()).text
-        : undefined
-
-    const interViewReportByAi = await generateInterviewReport({
-        resume,
-        selfDescription,
-        jobDescription
-    })
-
-    const interviewReport = await interviewReportModel.create({
-        user: req.user.id,
-        resume,
-        selfDescription,
-        jobDescription,
-        ...interViewReportByAi
-    })
-
-    res.status(201).json({
-        message: "Interview report generated successfully.",
-        interviewReport
-    })
-
 }
 
 /**
